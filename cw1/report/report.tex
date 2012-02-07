@@ -9,6 +9,7 @@
 \usepackage{color}
 \usepackage{subfig}
 \usepackage{fancyhdr}
+\usepackage{newclude}
 \usepackage[nodayofweek]{datetime}
 \usepackage[small,compact]{titlesec}
 \usepackage[pdfborder=0]{hyperref}
@@ -37,18 +38,20 @@
 \section{Introduction}
 
 \section{Acquired decision trees}
-    \include{decision_trees}
+    \include*{decision_trees}
 
-\section{Single emotion per exampe}
+\section{Single emotion per example}
 
 \section{Ambiguity}
 
 \section{Cross validation classification results}
     \subsection{Confusion matrix}
-    \include{confusion_matrix}
+    \include*{confusion_matrix}
+    \subsection{Average recall and precision rates per class}
+    \include*{average_recall_precision}
 
 \section{Pruning}
-    \subsection{\emph{pruning\_example} function}
+    \subsection{\emph{pruning\_example()} function}
 
 %\pagebreak	
 %\section{References}
