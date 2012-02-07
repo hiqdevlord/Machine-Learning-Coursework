@@ -1,16 +1,18 @@
-function prune_example(x,y)
+function tree=prune_example(x,y)
     
 % x: noSamples x 45 (as returned by loaddata)
 % y: noSamples x 1 (as returned by loaddata)
 
 tree = treefit(x,y,'method','classification','catidx',1:100,'splitmin',1);
-
+%treedisp(tree);
 [cost,s,nodes,bestLevel] = treetest(tree,'cross',x,y);
 [cost2,s2,nodes2,bestLevel2] = treetest(tree,'resubstitution');
 
 prunedTree = treeprune(tree,'level',bestLevel);
 prunedTree2 = treeprune(tree,'level',bestLevel2);
-
+treedisp(prunedTree);
+treedisp(prunedTree2);
+%DrawDecisionTree(prunedTree2,'prunedTree2');
 [mincost,minloc] = min(cost);
 [mincost2,minloc2] = min(cost2);
 
