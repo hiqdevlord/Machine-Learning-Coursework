@@ -1,0 +1,11 @@
+*~
+
+#Latex intermediate files
+*.pdf
+*.aux
+*.bbl
+*.out
+*.blg
+*.log
+
+*.xml
