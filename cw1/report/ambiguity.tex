@@ -1,9 +1,11 @@
 During the classification phase, while the testTress function was being executed, two different ambiguity cases had been triggered. 
 
-1. Several elements of the vector y which contains the label prediction had the value 0. That means that the classifier wasn’t able to classify those examples.
+1. Several elements of the vector y which contains the label prediction had the
+value 0. That means that the classifier wasn't able to classify those examples.
 
 2. Some examples were classified as more than 1 emotion.
 
-As a result of the first case, the cross-validation had 14% average error and that’s because the decision tree couldn't find an emotion to match it with the example. To solve this problem, the following process has been implemented. After the classification of each one of the ten subsets , each label prediction inside the vector y  that has the value 0 is being replaced with the most frequently occurred value of the specific subset.
+As a result of the first case, the cross-validation had 14\% average error and
+that's because the decision tree couldn't find an emotion to match it with the example. To solve this problem, the following process has been implemented. After the classification of each one of the ten subsets , each label prediction inside the vector y  that has the value 0 is being replaced with the most frequently occurred value of the specific subset.
 
 For the second phase two strategies have been tested. The first strategy was to match the examples, which had more than one classification, with one random candidate among those classifications. The second strategy was to pick the emotion from the decision tree where the positive classification occurred at the deepest leaf node. Having tested both strategies, the result of the first strategy fluctuates between 0,08 and 0,12 while the other one produces a stable average error equal to 0,1.
