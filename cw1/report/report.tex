@@ -1,6 +1,6 @@
 \documentclass[a4paper,11pt]{article}
 \usepackage[margin=2cm]{geometry}
-%\usepackage{anysize}
+\usepackage{anysize}
 \usepackage[pdftex]{graphicx}
 \usepackage{url}
 \usepackage{fixltx2e}
@@ -16,9 +16,8 @@
 \usepackage[pdfborder=0]{hyperref}
 \longdate
 
-\setlength{\parskip}{11pt} 
+\setlength{\parskip}{10pt} 
 \setlength\parindent{0pt}
-
 \pagestyle{fancyplain}
 \fancyhf{}
 \lhead{\fancyplain{}{Machine Learning CBC}}
@@ -37,17 +36,16 @@
 \begin{document}
 \maketitle
 
-\section{Implementation}
-    \include*{implementation}
+\section{Introduction}
 
 \section{Acquired decision trees}
     \include*{decision_trees}
 
-\pagebreak
-\section{Ambiguity}
-    \include*{ambiguity}
+\section{Single emotion per example}
 
-\section{Evaluation}
+\section{Ambiguity}
+\pagebreak
+\section{Results}
     \include*{measure}
 
 \section{Pruning}
