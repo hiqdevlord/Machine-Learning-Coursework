@@ -9,16 +9,25 @@ See figure~\ref{fig:confusionMatrix}.
 From this matrix we can observe that the correct classifications for each
 class-emotion are on the matrix's diagonal. So we can conclude that for the
 Surprise and for the Happiness there isn't any confusion. On the other hand, for the Anger, Disgust, Fear and Sadness there are some misclassified examples. 
+
+For the calculation of the precision and the recall rates per class, we used two formulas which can use the information we already have in the confusion matrix and calculate those two rates.
+
 See figure~\ref{fig:averageRecall}
 \include*{average_recall_precision}
 
-For the calculation of the precision and the recall rates per class, we used two formulas which can use the information we already have in the confusion matrix and calculate those two rates. So for example we have the confusion matrix below:
+So for example we have the confusion matrix below:
 
-Table goes here
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.3\textwidth]{confusionMatrixCalc.pdf}
+    \caption{TITLE HERE}
+    \label{fig:confisionMatixCalc}
+\end{figure}
 
 We can easily derive the recall and the precision by using those formulas:
-Precision\textsubscript{A} =
-tp\textsubscript{A}/(tp\textsubscript{A}+e\textsubscript{BA}+e\textsubscript{CA})
-Recall\textsubscript{A} =
-tp\textsubscript{A}/(tp\textsubscript{A}+e\textsubscript{AB}+e\textsubscript{AC})
+
+Precision\textsubscript{A} = tp\textsubscript{A}/(tp\textsubscript{A}+e\textsubscript{BA}+e\textsubscript{CA})
+
+Recall\textsubscript{A} = tp\textsubscript{A}/(tp\textsubscript{A}+e\textsubscript{AB}+e\textsubscript{AC})
+
 (The precision and recall rates, along with the F1-measure proof our previous conclusions for classes-emotions.)
