@@ -7,7 +7,8 @@ tree = treefit(x,y,'method','classification','catidx',1:100,'splitmin',1);
 %treedisp(tree);
 [cost,s,nodes,bestLevel] = treetest(tree,'cross',x,y);
 [cost2,s2,nodes2,bestLevel2] = treetest(tree,'resubstitution');
-
+cost1 = cost'
+cost2 = cost2'
 prunedTree = treeprune(tree,'level',bestLevel);
 prunedTree2 = treeprune(tree,'level',bestLevel2);
 treedisp(prunedTree);
@@ -18,14 +19,14 @@ treedisp(prunedTree2);
 
 
 plot(nodes,cost,'b-o',nodes(bestLevel+1),cost(bestLevel+1),'rs');
-xlabel('Tree size (number of terminal nodes)')
+xlabel('Tree size (number of terminal nodes) Cross validation')
 ylabel('Cost')
 axis([0 12 0 1])
 grid on
 
 figure(2)
 plot(nodes2,cost2,'b-o',nodes2(bestLevel2+1),cost2(bestLevel2+1),'rs');
-xlabel('Tree size (number of terminal nodes)')
+xlabel('Tree size (number of terminal nodes) resubstitution')
 ylabel('Cost')
 grid on
 axis([0 12 0 1])
