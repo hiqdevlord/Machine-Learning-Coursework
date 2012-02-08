@@ -20,8 +20,12 @@ Once the level over pruning has been determined the tree is pruned with the
 \emph{treeprune()} function. This helps to reduce the computational cost of
 classification and may also help to remove a certain level of 'overfit'.
 
-\begin{figure}[h!]
+Figure \ref{fig:pruning} plots the results of the validation techiques.
+
+\begin{figure}[h]
     \centering
     \subfloat[Ten-fold cross-validation]{\label{fig:fig1}\includegraphics[width=0.5\textwidth]{fig1.pdf}}
     \subfloat[Resubstitution]{\label{fig:fig2}\includegraphics[width=0.5\textwidth]{fig2.pdf}}
+    \caption{Pruning plots}
+    \label{fig:pruning}
 \end{figure}
