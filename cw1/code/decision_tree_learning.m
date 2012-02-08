@@ -1,44 +1,47 @@
 function [decision_tree]=decision_tree_learning(examples,attribs,targets)
+
+%If all the labels are the same return a leafnode with that label
 if all(targets==1) || all(targets==0)
     decision_tree=struct('class',targets(1),'kids',[]);
-    msg='SAME LABEL TRUE - LEAF NODE';
+%If the attributes list is empty return a leafnode with that label that
+%appears the most in the targets vector.
 elseif isempty(attribs)
     decision_tree=struct('class',majority_value(targets),'kids',[]);
-    msg='ATTRIBUTES EMPTY - LEAF NODE';
 else
-    msg='INTERNAL - ROOT NODE';
-    best=chooseBestDA(attribs,examples,targets);
+    %Apply the ID3 algorithm on the data set to compute the attribute that
+    %contributes the most for the decision
+    best=choose_best_decision_attribute(attribs,examples,targets);
     tree.op=best;
-    values=[0,1];
+    val=[0,1]; %Distinct values val[1]=0, val[2]=1
     [rows,cols]=size(examples);
     for u=1:2
         k=0;
-        x1=[];
-        y1=[];
+        examples_new=[];
+        targets_new=[];
         for i=1:rows
-            if examples(i,best)==values(u)
+            %Create a new examples set that holds all the rows from the
+            %original examples set where for the attribute(column) that was 
+            %chosen as best is equal to values(u) and also create a new 
+            %target vector with the corresponding label 
+            if examples(i,best)==val(u)
                 k=k+1;
-                x1(k,:)=examples(i,:);
-                y1(k)=targets(i);
+                examples_new(k,:)=examples(i,:);
+                targets_new(k)=targets(i);
             end
         end
         
-        if isempty(x1)
+        %If the new examples set is empty create a leafnode branch with
+        %label the majority value of targets
+        if isempty(examples_new)
             branch=struct('class',majority_value(targets),'kids',[]);
-            msg='EMPTY X1'  
+        %In the case that the new examples set is not empty then we create
+        %an internal node on the tree running the decision tree algorithm
+        %with the new inputs.
         else
             attribs(attribs==best)=[];
-            branch=decision_tree_learning(x1,attribs,y1);
+            branch=decision_tree_learning(examples_new,attribs,targets_new);
         end
         tree.kids{u}=branch;        
     end
     decision_tree=tree;
-end
-
-function maj_value=majority_value(targets)
-
-if length(find(targets==1))>length(find(targets==0))
-    maj_value=1;
-else
-    maj_value=0;
 end
