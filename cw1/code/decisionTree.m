@@ -1,4 +1,4 @@
-function decisionTree()
+function tree=decisionTree()
 
 [examples,target]=loaddata('cleandata_students.txt'); %Loads initial data
 attribs=[1:45]; %Attributes list
