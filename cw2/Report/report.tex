@@ -84,7 +84,7 @@ In this method, the performance function has been changed. The default performan
 Another way to improve the generalization is through the regularisation of small data sets with Bayesian Regularisation. The \emph{trainbr} function, which implements the Bayesian regularisation was tested for training the network. However, after testing the team decided that the performance of the network using the training function \emph{trainscg} along with the performance function \emph{msereg} is better when compared to the network with the \emph{trainbr} function.
 
 \subsection{Early Stopping}
-The second method that has been used to avoid overfitting is stopping the training of the network at an earlier point. For this purpose, Matlab offers modification option on the training function. In the specific neural network the following training parameters of the \emph{trainscg} has been set up. Firstly, the \emph{net.trainingParam.goal} has been set up in order to stop the training when the network has achieved classifying correctly 99\% of all examples. Secondly, the \emph{net.trainParam.min_grad} which is responsible for stopping the training when the gradient of the network performance reaches a certain minimum has been used with the value 0.01. This value was chosen so that the training stops when the error rate decreases by a small amount, but not smaller than 0.01.  Lastly, the parameter \emph{net.trainParam.epochs} was chosen to have the value of 100 maximum epochs, based on the experiment results which have been discussed in the previous section.
+The second method that has been used to avoid overfitting is stopping the training of the network at an earlier point. For this purpose, Matlab offers modification option on the training function. In the specific neural network the following training parameters of the \emph{trainscg} has been set up. Firstly, the \emph{net.trainingParam.goal} has been set up in order to stop the training when the network has achieved classifying correctly 99\% of all examples. Secondly, the \emph{net.trainParam.min\_grad} which is responsible for stopping the training when the gradient of the network performance reaches a certain minimum has been used with the value 0.01. This value was chosen so that the training stops when the error rate decreases by a small amount, but not smaller than 0.01.  Lastly, the parameter \emph{net.trainParam.epochs} was chosen to have the value of 100 maximum epochs, based on the experiment results which have been discussed in the previous section.
 
 \section{Validation Results}
 Below are the final average Confusion Matrices, Recall, Precision rates and the F1 measure of both network approaches. The network parameters for both types of networks:
@@ -108,13 +108,39 @@ These graphs show the mean F1 measure computed for each fold
 \includegraphics[width=1.0\textwidth]{mpfsingle.pdf}
 \subsection{10-Fold Cross-Validation Average Results}
 
-One Multi-Output Confusion Matrix
-11	0	1	0	0	0
-0	21	1	0	0	0
-2	0	5	0	0	0
-0	0	0	24	0	0
-0	0	0	0	12	0
-0	0	0	0	0	23
+
+\begin{figure}[h]                                                               
+\begin{center}                                                                  
+     \begin{tabular}{ | l || c | c | c | c | c | c | }                           
+     \hline                                                                      
+           & Anger 1 & Disgust 2 & Fear 3 & Happiness 4 & Sadness 5 & Surprise 6 \\ \hline \hline
+         Anger 1 		& 11 & 0 & 0 & 0 & 0 & 0 \\ \hline                               
+         Disgust 2 		& 0 & 21 & 0 & 0 & 0 & 0 \\ \hline                            
+         Fear 3 		& 2 & 0 & 5 & 0 & 0 & 0 \\ \hline                                
+         Happiness 4 	& 0 & 0 & 0 & 24 & 0 & 0 \\ \hline                          
+         Sadness 5 		& 0 & 0 & 0 & 0 & 12 & 0 \\ \hline                             
+         Surprise 6 	& 0 & 0 & 0 & 0 & 0 & 23 \\ \hline                           
+     \end{tabular}                                                               
+     \caption{One Multi-Output Confusion Matrix.}
+     \label{fig:oneConfusionMatrix}                                                 
+\end{center}                                                                    
+\end{figure}   
+
+
+ \begin{figure}[h]                                                               
+ \begin{center}                                                                  
+ \begin{tabular}{ | l || c | c | c | c | c | c | }                               
+     \hline                                                                      
+           							& Anger 1 & Disgust 2 & Fear 3 & Happiness 4 & Sadness 5 & Surprise 6 \\ \hline \hline
+         Avg Recall 				& 0.916666666666667 & 0.954545454545455 & 0.714285714285714 & 1 & 1 & 1 \\ \hline   
+         Avg Precision 				& 0.846153846153846 & 1 & 0.714285714285714 & 1 & 1 & 1 \\ \hline
+         F\textsubscript{1} Measure & 0.8800 & 0.9767 & 0.7143 &  1.0000 &  1.0000 &  1.0000
+         0.9787 \\ \hline                                                        
+     \end{tabular}                                                               
+     \caption{One Multi-Output evaluation results}                                                
+     \label{fig:averageRecall}                                                   
+ \end{center}                                                                    
+ \end{figure} 
 
 Precision
 0.846153846153846	1	0.714285714285714	1	1	1
@@ -130,13 +156,22 @@ Avg Error
 0.04
 
 
-Six Single-Output Confusion Matrix
-10	0	1	0	1	0
-1	21	0	0	0	0
-1	1	5	0	0	0
-0	0	0	24	0	0
-0	0	0	0	11	1
-0	0	0	0	0	23
+\begin{figure}[h]                                                               
+\begin{center}                                                                  
+     \begin{tabular}{ | l || c | c | c | c | c | c | }                           
+     \hline                                                                      
+           & Anger 1 & Disgust 2 & Fear 3 & Happiness 4 & Sadness 5 & Surprise 6 \\ \hline \hline
+         Anger 1 		& 10 & 0 & 1 & 0 & 1 & 0 \\ \hline                               
+         Disgust 2 		& 1 & 21 & 0 & 0 & 0 & 0 \\ \hline                            
+         Fear 3 		& 1 & 1 & 5 & 0 & 0 & 0 \\ \hline                                
+         Happiness 4 	& 0 & 0 & 0 & 24 & 0 & 0 \\ \hline                          
+         Sadness 5 		& 0 & 0 & 0 & 0 & 11 & 1 \\ \hline                             
+         Surprise 6 	& 0 & 0 & 0 & 0 & 0 & 13 \\ \hline                           
+     \end{tabular}                                                               
+     \caption{Six Single-Output Confusion Matrix.}
+     \label{fig:sixConfusionMatrix}                                                 
+\end{center}                                                                    
+\end{figure}
 
 Precision
 0.833333333333333	0.954545454545455	0.833333333333333	1	0.916666666666667	0.958333333333333
