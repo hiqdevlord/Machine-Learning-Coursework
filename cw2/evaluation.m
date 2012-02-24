@@ -10,7 +10,7 @@ sum=0;
 actual=[];
 predicted=[];
 currentFold=0;
-
+error_min=1;
 %The examples matrix is split test_data and train_data which correspond to
 %the 10% and 90% accordingly.
 for i=1:examples_no/N:examples_no
@@ -71,15 +71,33 @@ for i=1:examples_no/N:examples_no
     end
     error(currentFold)=error(currentFold)/N;
     
+    %Find out the tree with the minimum error
+    if whichnet==1
+        if error_min>error(currentFold)
+            error_min=error(currentFold);
+            optimalnet=nets;
+        end
+    end
+    
     %Sum up all the 10 errors in order to compute the avg error later
     sum=sum+error(currentFold);
 end
 
+    
+    %save('nets_single','optimalnet');
+
+    
 %Display performance(F1Measure) per fold figure
 figure;
-x=[1:10];
-plot(x,fmean,'LineWidth',2,'LineStyle','-');
-
+x_axis=[1:10];
+%plot(x_axis,fmean,'LineWidth',2,'LineStyle','-');
+% Create plot
+plot(x_axis,fmean,'MarkerFaceColor',[0 0 1],'Marker','o','LineWidth',2);
+xlabel('Folds');
+ylabel({'Average Error'});
+title('F1 Measure Per Fold (Single Multi-Output Network)');
+ylim([0.3 1.1]);
+%title('F1 Measure Per Fold (Multiple Single-Output Networks)');
 %Compute the average total error of all folds and the average 
 %confusion matrix
 avg_error=(1/N)*sum;
