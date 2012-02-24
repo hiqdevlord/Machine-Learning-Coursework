@@ -4,7 +4,7 @@ function neural_net()
 [P,T]=ANNdata(x,y);
 
 %Evaluate the two networks
-for i=1:2
+for i=1:1
     [cm(i),error(i)]=evaluation(x,y,i-1);
     [pr(i),rc(i)]=precision_recall(cm(i));
     fa(i)=fa_measure(1,pr(i), rc(i));

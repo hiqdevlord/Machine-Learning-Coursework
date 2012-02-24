@@ -1,15 +1,18 @@
 function [cm,avg_error]=evaluation(examples,targets,whichnet)
 %%whichnet=0 : One Multi Output Network
 %%whichnet=1 : Six Single Output Networks
+
 N=10; %N-Cross Validation
-c=1;sum=0;
+
+%VARIABLE INITIALISATIONS%
+sum=0;
 [examples_no, ~]=size(examples);
 actual=[];
 predicted=[];
+currentFold=0;
 
 %The examples matrix is split test_data and train_data which correspond to
 %the 10% and 90% accordingly.
-currentFold=0;
 for i=1:examples_no/N:examples_no
     currentFold=currentFold+1;
     %Compute test data (10 rows)
@@ -26,13 +29,17 @@ for i=1:examples_no/N:examples_no
     [P,T]=ANNdata(train_data,train_target);
     
     if whichnet==0
+        %Calls the function that returns the trained mutli output network
         net=getMultiOutputNet(P,T);
+        %Returns the vector containing all the predicted values for the
+        %specific test data        
         y=testANN(net,test_data',whichnet);
     else
+        %Calls the function that returns the trained six single output
+        %networks
         nets=getSingleOutputNets(P,T);
         %Returns the vector containing all the predicted values for the
         %specific test data
-        test_data'
         y=testANN(nets,test_data,whichnet);
     end
 
@@ -52,34 +59,41 @@ for i=1:examples_no/N:examples_no
     cm_per_fold=conf_matrix(test_targets', y');
     [pr,rc]=precision_recall(cm_per_fold);
     f=fa_measure(1,pr,rc);
+    %Displ
     fmean(currentFold)=mean(f);
-    
+    if fmean_min>fmean(currentFold)
+        fmean_min=fmean(currentFold);
+        opt_net=currentFold;
+    end
     %Estimate the error for the current subset by comparing it with the
     %actual label vector
-    e(c)=0;
+    error(currentFold)=0;
     for j=1:N
         if y(j)~=test_targets(j)
-            e(c)=e(c)+1;
+            error(currentFold)=error(currentFold)+1;
         end
     end
-    e(c)=e(c)/N;
+    error(currentFold)=error(currentFold)/N;
     
     %Sum up all the 10 errors in order to compute the avg error later
-    sum=sum+e(c);
-    c=c+1;
+    sum=sum+error(currentFold);
 end
 
 %Display performance(F1Measure) per fold figure
 figure;
-x=[1:10];
-plot(x,fmean,'LineWidth',2,'LineStyle','-');
-%legend('1-fold','2-fold','3-fold','4-fold','5-fold','6-fold','7-fold','8-fold','9-fold','10-fold');
-%Compute the total error and the confusion matrix
+x_axis=[1:10];
+%plot(x_axis,fmean,'LineWidth',2,'LineStyle','-');
+% Create plot
+plot(x_axis,fmean,'MarkerFaceColor',[0 0 1],'Marker','o','LineWidth',2);
+xlabel('Folds');
+ylabel({'Average Error'});
+title('F1 Measure Per Fold (Single Multi-Output Network)');
+ylim([0.3 1.1]);
+%title('F1 Measure Per Fold (Multiple Single-Output Networks)');
+%Compute the average total error of all folds and the average 
+%confusion matrix
 avg_error=(1/N)*sum;
 cm=conf_matrix(actual, predicted);
-%[pr,rc]=precision_recall(cm);
-%[f]=fa_measure(1,pr,rc)
-
 
 end
     
